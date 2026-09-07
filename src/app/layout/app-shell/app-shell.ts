@@ -1,9 +1,9 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { GlobalMessageService } from '../../services/global-message.service';
-import { LiveSyncService } from '../../services/live-sync';
-import { TmsDataService } from '../../services/tms-data.service';
+import { AuthService } from '../../core/auth/auth.service';
+import { GlobalMessageService } from '../../core/notifications/global-message.service';
+import { LiveSyncService } from '../../core/realtime/live-sync';
+import { ApplicationDataCoordinator } from '../../application/application-data.coordinator';
 
 @Component({
   selector: 'tms-app-shell',
@@ -15,7 +15,7 @@ import { TmsDataService } from '../../services/tms-data.service';
 export class AppShellComponent {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
-  private readonly data = inject(TmsDataService);
+  private readonly data = inject(ApplicationDataCoordinator);
   protected readonly liveSync = inject(LiveSyncService);
   protected readonly globalMessages = inject(GlobalMessageService);
 

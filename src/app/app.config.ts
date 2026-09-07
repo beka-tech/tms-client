@@ -5,9 +5,9 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient, withInterceptors, withXsrfConfiguration } from '@angular/common/http';
 
 import { routes } from './app.routes';
-import { credentialsInterceptor } from './interceptors/credentials.interceptor';
-import { jwtInterceptor } from './interceptors/jwt.interceptor';
-import { errorInterceptor } from './interceptors/error.intercepter';
+import { credentialsInterceptor } from './core/http/interceptors/credentials.interceptor';
+import { jwtInterceptor } from './core/http/interceptors/jwt.interceptor';
+import { errorInterceptor } from './core/http/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
