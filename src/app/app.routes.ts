@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 import { AppShellComponent } from './layout/app-shell/app-shell';
-import { authGuard } from './guards/auth.guard';
-import { adminGuard, instructorGuard } from './guards/role.guard';
+import { authGuard } from './core/auth/guards/auth.guard';
+import { adminGuard, instructorGuard } from './core/auth/guards/role.guard';
 
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./features/login/login.component').then((m) => m.LoginComponent),
+    loadChildren: () => import('./features/auth/auth.routes').then((m) => m.routes),
   },
   {
     path: '',
@@ -15,41 +15,28 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadComponent: () =>
-          import('./features/student-dashboard/student-dashboard.component').then(
-            (m) => m.StudentDashboardComponent,
-          ),
+        loadChildren: () => import('./features/dashboard/dashboard.routes').then((m) => m.routes),
       },
       {
         path: 'students',
         canActivate: [adminGuard],
-        loadComponent: () =>
-          import('./features/students/students.component').then((m) => m.StudentsComponent),
+        loadChildren: () => import('./features/students/students.routes').then((m) => m.routes),
       },
       {
         path: 'courses',
-        loadComponent: () => import('./features/courses/courses').then((m) => m.CoursesComponent),
-      },
-      {
-        path: 'courses/:id',
-        loadComponent: () =>
-          import('./features/course-detail/course-detail').then((m) => m.CourseDetailComponent),
+        loadChildren: () => import('./features/courses/courses.routes').then((m) => m.routes),
       },
       {
         path: 'enrollments',
         canActivate: [instructorGuard],
-        loadComponent: () =>
-          import('./features/enrollment-list/enrollment-list').then(
-            (m) => m.EnrollmentListComponent,
-          ),
+        loadChildren: () =>
+          import('./features/enrollments/enrollments.routes').then((m) => m.routes),
       },
       {
         path: 'certificates',
         canActivate: [adminGuard],
-        loadComponent: () =>
-          import('./features/certificates/certificates.component').then(
-            (m) => m.CertificatesComponent,
-          ),
+        loadChildren: () =>
+          import('./features/certificates/certificates.routes').then((m) => m.routes),
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
